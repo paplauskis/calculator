@@ -68,11 +68,20 @@ numberBtn.forEach((number) => {
 const operatorBtn = document.querySelectorAll('.operator');
 operatorBtn.forEach((operator) => {
     operator.addEventListener('click', () => {
-        storedNumber = firstNumber;
-        console.log(storedNumber)
+        if (storedOperator === '') {
+            storedNumber = firstNumber;
+            console.log(storedNumber);
+        } else {
+            storedNumber = operate(storedOperator, firstNumber, secondNumber);
+            firstNumber = storedNumber;
+            secondNumber = '';
+            displayValue = firstNumber.toString();
+            display.textContent = displayValue;
+
+        }
         storedOperator = operator.value;
         console.log(operator.value);
-        appendNumber(operator.textContent);
+        displayValue = operator.textContent;
     });
 });
 
@@ -81,9 +90,7 @@ equalBtn.addEventListener('click', equal)
 
 function equal() {
     // console.log(operate(storedOperator, storedNumber, secondNumber));
-    const result = display.textContent = operate(storedOperator, storedNumber, secondNumber);
-    firstNumber = result;
+    firstNumber = display.textContent = operate(storedOperator, storedNumber, secondNumber);
     secondNumber = '';
-
     console.log(firstNumber);
 }
