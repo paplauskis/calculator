@@ -1,6 +1,5 @@
 let displayValue = '';
 let storedNumber = '';
-let currentNumber = '';
 let firstNumber = '';
 let secondNumber = '';
 let storedOperator = '';
@@ -44,6 +43,10 @@ function appendNumber(num) {
 function clear() {
     displayValue = '';
     display.textContent = '0';
+    storedNumber = '';
+    firstNumber = '';
+    secondNumber = '';
+    storedOperator = '';
 
 }
 
@@ -53,15 +56,13 @@ numberBtn.forEach((number) => {
         if (storedOperator === '') {
             firstNumber += number.value;
             firstNumber = firstNumber * 1;
-            // console.log(firstNumber);
+            //  console.log(firstNumber);
         } else {
             secondNumber += number.value;
             secondNumber = secondNumber * 1;
-             console.log(secondNumber);
+            //  console.log(secondNumber);
         }
-        // storedNumber += number.value;
-        // console.log(storedNumber);
-        appendNumber(number.textContent);
+         appendNumber(number.textContent);
     });
 });
 
@@ -70,7 +71,7 @@ operatorBtn.forEach((operator) => {
     operator.addEventListener('click', () => {
         if (storedOperator === '') {
             storedNumber = firstNumber;
-            console.log(storedNumber);
+            // console.log(storedNumber);
         } else {
             storedNumber = operate(storedOperator, firstNumber, secondNumber);
             firstNumber = storedNumber;
@@ -80,7 +81,7 @@ operatorBtn.forEach((operator) => {
 
         }
         storedOperator = operator.value;
-        console.log(operator.value);
+        // console.log(operator.value);
         displayValue = operator.textContent;
     });
 });
@@ -92,5 +93,7 @@ function equal() {
     // console.log(operate(storedOperator, storedNumber, secondNumber));
     firstNumber = display.textContent = operate(storedOperator, storedNumber, secondNumber);
     secondNumber = '';
-    console.log(firstNumber);
+    storedNumber = '';
+    storedOperator = '';
+    // console.log(firstNumber);
 }
