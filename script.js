@@ -1,6 +1,3 @@
-/* eslint-disable func-names */
-/* eslint-disable no-multi-assign */
-/* eslint-disable no-use-before-define */
 let displayValue = '';
 let storedNumber = '';
 let firstNumber = '';
@@ -10,35 +7,27 @@ const display = document.querySelector('.screen');
 const clearBtn = document.querySelector('.clear');
 clearBtn.addEventListener('click', clear);
 
-function add(a, b) {
-  return a + b;
-}
-function subtract(a, b) {
-  return a - b;
-}
-function multiply(a, b) {
-  return a * b;
-}
-function divide(a, b) {
-  if (b === 0) return "Can't divide with 0!";
-  return a / b;
-}
+const calculator = (() => {
+  const add = (a, b) => a + b;
+  const subtract = (a, b) => a - b;
+  const multiply = (a, b) => a * b;
+  const divide = (a, b) => b === 0 ? 'Can\'t divide by 0!' : a / b;
+
+  return {
+    add,
+    subtract,
+    multiply,
+    divide,
+  }
+})();
 
 const operate = function (operator, num1, num2) {
-  if (operator === '+') {
-    return add(num1, num2);
-  }
-  if (operator === '-') {
-    return subtract(num1, num2);
-  }
-  if (operator === '*') {
-    return multiply(num1, num2);
-  }
+  if (operator === '+') return calculator.add(num1, num2);
+  if (operator === '-') return calculator.subtract(num1, num2); 
+  if (operator === '*') return calculator.multiply(num1, num2);
   if (operator === '/') {
-    if (num2 === 0) {
-      return 'ERROR';
-    }
-    return divide(num1, num2);
+    if (num2 === 0) return 'ERROR';
+    return calculator.divide(num1, num2);
   }
   return 'Error: invalid operator!';
 };
@@ -63,11 +52,9 @@ numberBtn.forEach((number) => {
     if (storedOperator === '') {
       firstNumber += number.value;
       firstNumber *= 1;
-      //  console.log(firstNumber);
     } else {
       secondNumber += number.value;
       secondNumber *= 1;
-      //  console.log(secondNumber);
     }
     appendNumber(number.textContent);
   });
@@ -78,7 +65,6 @@ operatorBtn.forEach((operator) => {
   operator.addEventListener('click', () => {
     if (storedOperator === '') {
       storedNumber = firstNumber;
-      // console.log(storedNumber);
     } else {
       storedNumber = operate(storedOperator, firstNumber, secondNumber);
       firstNumber = storedNumber;
@@ -87,7 +73,6 @@ operatorBtn.forEach((operator) => {
       display.textContent = displayValue;
     }
     storedOperator = operator.value;
-    // console.log(operator.value);
     displayValue = operator.textContent;
   });
 });
@@ -96,7 +81,6 @@ const equalBtn = document.querySelector('.equal');
 equalBtn.addEventListener('click', equal);
 
 function equal() {
-  // console.log(operate(storedOperator, storedNumber, secondNumber));
   firstNumber = display.textContent = operate(
     storedOperator,
     storedNumber,
@@ -105,5 +89,4 @@ function equal() {
   secondNumber = '';
   storedNumber = '';
   storedOperator = '';
-  // console.log(firstNumber);
 }
